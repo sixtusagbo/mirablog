@@ -17,6 +17,8 @@ Route::get('/', [App\Http\Controllers\PagesController::class, 'index']);
 Route::get('/about', [App\Http\Controllers\PagesController::class, 'about'])->name('about');
 Route::get('/contact', [App\Http\Controllers\PagesController::class, 'contact'])->name('contact');
 
+Route::resource('posts', App\Http\Controllers\PostsController::class)->except(['index']);
+
 Auth::routes();
 
 Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
