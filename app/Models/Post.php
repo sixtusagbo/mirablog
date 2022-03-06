@@ -17,7 +17,9 @@ class Post extends Model
     protected $fillable = [
         'title',
         'body',
-        // 'tags',
+        'tags',
+        'user_id',
+        'category_id',
     ];
 
     /**
@@ -26,5 +28,21 @@ class Post extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the category that owns the post
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * Get the comments for the post.
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

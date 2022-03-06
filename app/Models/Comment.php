@@ -15,8 +15,32 @@ class Comment extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'title',
-        'body',
-        // 'tags',
+        'content',
+        'user_id',
+        'post_id',
     ];
+
+    /**
+     * Get the user that owns the comment.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the post that owns the comment.
+     */
+    public function post()
+    {
+        return $this->belongsTo(Post::class);
+    }
+
+    /**
+     * Get the replies for the comment
+     */
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }
 }

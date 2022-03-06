@@ -19,4 +19,12 @@ class Category extends Model
     protected $fillable = [
         'name',
     ];
+
+    /**
+     * Get the posts for the category
+     */
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }

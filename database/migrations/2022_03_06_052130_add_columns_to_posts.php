@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('comments', function (Blueprint $table) {
-            $table->id();
-            $table->string('content');
-            $table->integer('user_id');
-            $table->integer('post_id');
-            $table->timestamps();
+        Schema::table('posts', function (Blueprint $table) {
+            $table->string('tags');
+            $table->integer('category_id');
         });
     }
 
@@ -29,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comments');
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropColumn(['tags', 'category_id']);
+        });
     }
 };
