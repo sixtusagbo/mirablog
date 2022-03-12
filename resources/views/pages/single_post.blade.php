@@ -13,8 +13,18 @@
                 <article>
                     <!-- Post header-->
                     <header class="mb-4">
-                        <!-- Post title-->
-                        <h1 class="fw-bolder mb-1">{{ $post->title }}</h1>
+                        <div class="d-flex justify-content-between">
+                            <!-- Post title-->
+                            <h1 class="fw-bolder mb-1">{{ $post->title }}</h1>
+                            <div>
+                                @auth
+                                    @if (Auth::user()->id == $post->user->id)
+                                        <a href="/posts/{{ $post->id }}/edit" class="btn btn-info me-2">Modify</a>
+                                        <button class="btn btn-danger">Delete</button>
+                                    @endif
+                                @endauth
+                            </div>
+                        </div>
                         <!-- Post meta content-->
                         <div class="text-muted fst-italic mb-2">Posted on {{ $post->created_at->toFormattedDateString() }}
                             by

@@ -35,7 +35,7 @@
                                             </div>
                                             <h2 class="card-title h4">{{ $post->title }}</h2>
                                             <p class="card-text">{!! substr($post->body, 0, 15) . '...' !!}</p>
-                                            <a class="btn btn-primary" href="posts/{{ $post->id }}">Read more →</a>
+                                            <a class="btn btn-primary" href="/posts/{{ $post->id }}">Read more →</a>
                                         </div>
                                     </div>
                                 </div>

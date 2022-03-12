@@ -92,7 +92,17 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        // return $id; //? test case
+
+        $post = Post::find($id);
+        $categories = Category::all()->pluck('name', 'id');
+
+        $data = [
+            'post' => $post,
+            'categories' => $categories,
+        ];
+
+        return view('dashboard.edit_post')->with($data);
     }
 
     /**
@@ -104,7 +114,23 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // return $request; //? test case
+
+        $newValues = $request->validate([
+            'title' => 'required',
+            'body' => 'required',
+            'tags' => 'required',
+            'category' => 'required',
+        ]);
+
+        $post = Post::find($id);
+        $post->title = $newValues['title'];
+        $post->body = $newValues['body'];
+        $post->tags = $newValues['tags'];
+        $post->category_id = $newValues['category'];
+        $post->save();
+
+        return redirect('/')->with('success', 'Post updated!');
     }
 
     /**
