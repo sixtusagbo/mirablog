@@ -14,24 +14,31 @@
                     <!-- Post header-->
                     <header class="mb-4">
                         <div class="d-flex justify-content-between">
-                            <!-- Post title-->
-                            <h1 class="fw-bolder mb-1">{{ $post->title }}</h1>
+                            <div>
+                                <!-- Post title-->
+                                <h1 class="fw-bolder mb-1">{{ $post->title }}</h1>
+                                <!-- Post meta content-->
+                                <div class="text-muted fst-italic mb-2">Posted on
+                                    {{ $post->created_at->toFormattedDateString() }}
+                                    by
+                                    {{ $post->user->name }}</div>
+                                <!-- Post categories-->
+                                <a class="badge bg-secondary text-decoration-none link-light"
+                                    href="">{{ $post->category->name }}</a>
+                            </div>
+
                             <div>
                                 @auth
                                     @if (Auth::user()->id == $post->user->id)
-                                        <a href="/posts/{{ $post->id }}/edit" class="btn btn-info me-2">Modify</a>
-                                        <button class="btn btn-danger">Delete</button>
+                                        <a href="/posts/{{ $post->id }}/edit" class="btn btn-info mb-2">Modify</a>
+                                        {!! Form::open(['route' => ['posts.destroy', $post->id], 'method' => 'DELETE', 'class' => 'form-inline']) !!}
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                        {!! Form::close() !!}
                                     @endif
                                 @endauth
                             </div>
                         </div>
-                        <!-- Post meta content-->
-                        <div class="text-muted fst-italic mb-2">Posted on {{ $post->created_at->toFormattedDateString() }}
-                            by
-                            {{ $post->user->name }}</div>
-                        <!-- Post categories-->
-                        <a class="badge bg-secondary text-decoration-none link-light"
-                            href="">{{ $post->category->name }}</a>
+
                     </header>
                     <!-- Preview image figure-->
                     <figure class="mb-4"><img class="img-fluid rounded"
@@ -45,10 +52,28 @@
                 <section class="mb-5">
                     <div class="card bg-light">
                         <div class="card-body">
-                            <!-- Comment form-->
-                            <form class="mb-4"><textarea class="form-control" rows="3"
-                                    @if (count($post->comments) > 0) placeholder="Join the discussion and leave a comment!" @else placeholder="Be the first to leave a comment!" @endif></textarea>
-                            </form>
+                            @auth
+                                <!-- Comment form-->
+                                <form class="mb-4">
+                                    <div class="row">
+                                        <div class="col-lg-11">
+                                            <textarea class="form-control" rows="3"
+                                                @if (count($post->comments) > 0) placeholder="Join the discussion and leave a comment!" @else placeholder="Be the first to leave a comment!" @endif></textarea>
+                                        </div>
+                                        <div class="col-lg-1 pt-3">
+                                            <button type="submit"
+                                                class="btn btn-outline-dark rounded-circle text-center">&#62;</button>
+                                            <p class="fw-bold">Send</p>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            @else
+                                <div class="alert alert-info">
+                                    <a href="{{ route('login') }}">Login</a> or <a href="{{ route('register') }}">Sign
+                                        Up</a> to join the discussion!
+                                </div>
+                            @endauth
                             <!-- Comments with replies-->
                             @foreach ($post->comments as $comment)
                                 <div class="d-flex mb-3">
