@@ -16,10 +16,19 @@ class PagesController extends Controller
     {
         $posts = Post::latest()->paginate(4);
         $cats = Category::orderBy('name', 'ASC')->get();
+        $recentPosts = Post::latest()->take(3)->get();
+        $seoKeys = $cats->pluck('name');
+        $keywords = '';
+
+        foreach ($seoKeys as $key) {
+            $keywords .= $key . ($key == $seoKeys->last() ? '' : ',');
+        }
 
         $data = [
             'posts' => $posts,
             'categories' => $cats,
+            'recentPosts' => $recentPosts,
+            'keywords' => $keywords,
         ];
 
         return view('pages.home')->with($data);

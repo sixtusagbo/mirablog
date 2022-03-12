@@ -8,6 +8,15 @@ use Illuminate\Http\Request;
 
 class PostsController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth')->except('show', 'category', 'search');
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -16,7 +25,13 @@ class PostsController extends Controller
      */
     public function create()
     {
-        // 
+        $categories = Category::all()->pluck('name', 'id');
+
+        $data = [
+            'categories' => $categories,
+        ];
+
+        return view('dashboard.create_post')->with($data);
     }
 
     /**
@@ -27,7 +42,24 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return $request; //? test case
+
+        $newPost = $request->validate([
+            'title' => 'required',
+            'body' => 'required',
+            'tags' => 'required',
+            'category' => 'required',
+        ]);
+
+        $post = new Post();
+        $post->title = $newPost['title'];
+        $post->body = $newPost['body'];
+        $post->tags = $newPost['tags'];
+        $post->user_id = auth()->user()->id;
+        $post->category_id = $newPost['category'];
+        $post->save();
+
+        return redirect('/')->with('success', 'New post created');
     }
 
     /**
@@ -40,10 +72,13 @@ class PostsController extends Controller
     {
         $post = Post::find($id);
         $cats = Category::orderBy('name', 'ASC')->get();
+        $postAuthor = $post->user->id;
+        $recentPostsFromTheAuthor = Post::latest()->where('user_id', $postAuthor)->take(3)->get();
 
         $data = [
             'post' => $post,
             'categories' => $cats,
+            'recentPostsFromTheAuthor' => $recentPostsFromTheAuthor,
         ];
 
         return view('pages.single_post')->with($data);
@@ -81,5 +116,56 @@ class PostsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Display all posts from a specified category
+     * 
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function category($id)
+    {
+        $category = Category::find($id);
+        $posts = $category->posts()->latest()->paginate(4);
+        $seoKeys = Category::orderBy('name', 'ASC')->get()->pluck('name');
+        $keywords = '';
+
+        foreach ($seoKeys as $key) {
+            $keywords .= $key . ($key == $seoKeys->last() ? '' : ',');
+        }
+
+        $data = [
+            'posts' => $posts,
+            'keywords' => $keywords,
+            'category' => $category,
+        ];
+
+        return view('pages.category')->with($data);
+    }
+
+    /**
+     * Display search results for a specified term
+     * 
+     * @param string $term
+     * @return \Illuminate\Http\Response
+     */
+    public function search($term)
+    {
+        $posts = Post::where('title', 'like', '%' . $term . '%')->latest()->paginate(3);
+        $seoKeys = Category::orderBy('name', 'ASC')->get()->pluck('name');
+        $keywords = '';
+
+        foreach ($seoKeys as $key) {
+            $keywords .= $key . ($key == $seoKeys->last() ? '' : ',');
+        }
+
+        $data = [
+            'posts' => $posts,
+            'keywords' => $keywords,
+            'term' => $term,
+        ];
+
+        return view('pages.search')->with($data);
     }
 }

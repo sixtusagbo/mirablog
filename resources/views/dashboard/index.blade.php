@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    <a href="{{route('posts.create')}}" class="btn btn-primary">Create Post</a>
                 </div>
             </div>
         </div>
