@@ -51,37 +51,59 @@
                 <!-- Comments section-->
                 <section class="mb-5">
                     <div class="card bg-light">
+                        <h5 class="card-header bg-dark text-light">Comments</h5>
                         <div class="card-body">
                             @auth
                                 <!-- Comment form-->
-                                <form class="mb-4">
-                                    <div class="row">
-                                        <div class="col-lg-11">
-                                            <textarea class="form-control" rows="3"
-                                                @if (count($post->comments) > 0) placeholder="Join the discussion and leave a comment!" @else placeholder="Be the first to leave a comment!" @endif></textarea>
-                                        </div>
-                                        <div class="col-lg-1 pt-3">
-                                            <button type="submit"
-                                                class="btn btn-outline-dark rounded-circle text-center">&#62;</button>
-                                            <p class="fw-bold">Send</p>
-                                        </div>
-                                    </div>
+                                {!! Form::open(['route' => 'comments.store']) !!}
 
-                                </form>
+                                <div class="row">
+                                    <div class="col-lg-11">
+                                        <textarea name="content" class="form-control" rows="3"
+                                            @if (count($post->comments) > 0) placeholder="Join the discussion and leave a comment!" @else placeholder="Be the first to leave a comment!" @endif></textarea>
+                                    </div>
+                                    <div class="col-lg-1 pt-3">
+                                        <button type="submit"
+                                            class="btn btn-outline-dark rounded-circle text-center">&#62;</button>
+                                        <p class="fw-bold">Send</p>
+                                    </div>
+                                    {!! Form::hidden('post_id', $post->id) !!}
+                                </div>
+                                {!! Form::close() !!}
                             @else
-                                <div class="alert alert-info">
+                                <div class="alert alert-info mb-0">
                                     <a href="{{ route('login') }}">Login</a> or <a href="{{ route('register') }}">Sign
                                         Up</a> to join the discussion!
                                 </div>
                             @endauth
                             <!-- Comments with replies-->
                             @foreach ($post->comments as $comment)
-                                <div class="d-flex mb-3">
+                                <div class="d-flex mb-0 mt-3">
                                     <!-- Parent comment-->
                                     <div class="flex-shrink-0"><img class="rounded-circle"
                                             src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
                                     <div class="ms-3">
-                                        <div class="fw-bold">{{ $comment->user->name }}</div>
+                                        {{-- <div class="fw-bold">{{ $comment->user->name }}</div> --}}
+                                        <div class="dropdown">
+                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                                data-bs-toggle="dropdown" aria-expanded="false"
+                                                style="text-decoration: none; font-weight: 600; color: #000;">
+                                                {{ $comment->user->name }}
+                                            </a>
+
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink"
+                                                style="border: none; background-color: transparent">
+                                                @auth
+                                                    @if ($comment->user->id == Auth::user()->id)
+                                                        {!! Form::open(['route' => ['comments.destroy', $comment->id], 'method' => 'DELETE']) !!}
+
+                                                        {{ Form::submit('Delete', ['class' => 'btn btn-danger w-100']) }}
+                                                        {!! Form::close() !!}
+                                                    @endif
+                                                    <button class="btn btn-primary mt-1 w-100">Reply</button>
+                                                @endauth
+                                            </div>
+                                        </div>
                                         {{ $comment->content }}
                                         <!-- Replies -->
                                         @if (count($comment->replies) > 0)
@@ -108,7 +130,7 @@
             <div class="col-lg-4">
                 <!-- Recent posts widget -->
                 <div class="mb-4">
-                    <div class="card-header rounded">Recent posts from {{ $post->user->name }}</div>
+                    <div class="card-header rounded bg-dark text-light">Recent posts from {{ $post->user->name }}</div>
 
                     <div class="list-group">
                         @foreach ($recentPostsFromTheAuthor as $post)
@@ -132,7 +154,7 @@
 
                 <!-- Categories widget-->
                 <div class="card mb-4">
-                    <div class="card-header">Categories</div>
+                    <div class="card-header bg-dark text-light">Categories</div>
 
                     <div class="card-body">
                         @foreach ($categories as $category)

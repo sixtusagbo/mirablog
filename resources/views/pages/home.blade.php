@@ -52,7 +52,7 @@
             <div class="col-lg-4">
                 <!-- Search widget-->
                 <div class="card mb-4">
-                    <div class="card-header">Search</div>
+                    <div class="card-header bg-dark text-light">Search</div>
                     <div class="card-body">
                         <div class="input-group">
                             <input class="form-control" id="search-field" type="text"
@@ -65,7 +65,7 @@
 
                 <!-- Categories widget-->
                 <div class="card mb-4">
-                    <div class="card-header">Categories</div>
+                    <div class="card-header bg-dark text-light">Categories</div>
 
                     <div class="card-body">
                         @foreach ($categories as $category)
@@ -77,7 +77,7 @@
 
                 <!-- Recent posts widget -->
                 <div class="mb-4">
-                    <div class="card-header rounded">Recent Posts</div>
+                    <div class="card-header rounded bg-dark text-light">Recent Posts</div>
 
                     <div class="list-group">
                         @if (count($posts) > 0)

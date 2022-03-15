@@ -148,7 +148,7 @@ class PostsController extends Controller
             $item->replies()->delete();
         });
         $post->comments()->delete();
-        Post::destroy($id);
+        $post->delete();
 
         return redirect('/')->with('success', 'Post deleted');
     }

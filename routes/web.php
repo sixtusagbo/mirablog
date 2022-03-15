@@ -19,6 +19,7 @@ Route::get('/about', [App\Http\Controllers\PagesController::class, 'about'])->na
 Route::get('/contact', [App\Http\Controllers\PagesController::class, 'contact'])->name('contact');
 
 Route::resource('posts', App\Http\Controllers\PostsController::class)->except(['index']);
+Route::resource('comments', App\Http\Controllers\CommentsController::class)->only(['store', 'destroy']);
 
 Route::get('/categories/{id}', [App\Http\Controllers\PostsController::class, 'category']);
 Route::get('/posts/find/{term}', [App\Http\Controllers\PostsController::class, 'search']);
