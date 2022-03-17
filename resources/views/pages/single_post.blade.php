@@ -83,9 +83,8 @@
                                     <div class="flex-shrink-0"><img class="rounded-circle"
                                             src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
                                     <div class="ms-3">
-                                        {{-- <div class="fw-bold">{{ $comment->user->name }}</div> --}}
                                         <div class="dropdown">
-                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            <a class="dropdown-toggle" href="" role="button" id="dropdownMenuLink"
                                                 data-bs-toggle="dropdown" aria-expanded="false"
                                                 style="text-decoration: none; font-weight: 600; color: #000;">
                                                 {{ $comment->user->name }}
@@ -100,11 +99,34 @@
                                                         {{ Form::submit('Delete', ['class' => 'btn btn-danger w-100']) }}
                                                         {!! Form::close() !!}
                                                     @endif
-                                                    <button class="btn btn-primary mt-1 w-100">Reply</button>
+                                                    <button type="button" class="btn btn-primary mt-1 w-100"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#reply-comment-{{ $comment->id }}">Reply</button>
                                                 @endauth
                                             </div>
                                         </div>
                                         {{ $comment->content }}
+                                        <!-- Reply Modal -->
+                                        <div class="modal fade" id="reply-comment-{{ $comment->id }}" tabindex="-1"
+                                            aria-labelledby="replyModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <!-- Reply form-->
+                                                        {!! Form::open(['route' => 'replies.store']) !!}
+
+                                                        <textarea name="content" class="form-control" rows="3"
+                                                            placeholder="Reply to {{ $comment->user->name }}'s comment"></textarea>
+                                                        <div class="d-flex justify-content-center">
+                                                            <button type="submit" class="btn btn-dark mt-3">Reply</button>
+                                                        </div>
+                                                        {!! Form::hidden('comment_id', $comment->id) !!}
+                                                        {!! Form::hidden('post_id', $post->id) !!}
+                                                        {!! Form::close() !!}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <!-- Replies -->
                                         @if (count($comment->replies) > 0)
                                             @foreach ($comment->replies->sortByDesc('created_at') as $reply)
@@ -113,7 +135,26 @@
                                                             src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
                                                             alt="..." /></div>
                                                     <div class="ms-3">
-                                                        <div class="fw-bold">{{ $reply->user->name }}</div>
+                                                        <div class="dropdown">
+                                                            <a class="dropdown-toggle" href="" role="button"
+                                                                id="dropdownMenuLink" data-bs-toggle="dropdown"
+                                                                aria-expanded="false"
+                                                                style="text-decoration: none; font-weight: 600; color: #000;">
+                                                                {{ $reply->user->name }}
+                                                            </a>
+
+                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink"
+                                                                style="border: none; background-color: transparent">
+                                                                @auth
+                                                                    @if ($reply->user->id == Auth::user()->id)
+                                                                        {!! Form::open(['route' => ['replies.destroy', $reply->id], 'method' => 'DELETE']) !!}
+
+                                                                        {{ Form::submit('Delete', ['class' => 'btn btn-danger w-100']) }}
+                                                                        {!! Form::close() !!}
+                                                                    @endif
+                                                                @endauth
+                                                            </div>
+                                                        </div>
                                                         {{ $reply->content }}
                                                     </div>
                                                 </div>
@@ -168,4 +209,15 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('other_scripts')
+    <script src="{{ asset('vendor/jquery.min.js') }}"></script>
+    <script>
+        $('#replyForm').hide();
+        $('#replyForm').click(function(e) {
+            e.preventDefault();
+            //TODO: Continue here
+        });
+    </script>
 @endsection

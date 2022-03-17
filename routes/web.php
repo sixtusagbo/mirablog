@@ -20,6 +20,7 @@ Route::get('/contact', [App\Http\Controllers\PagesController::class, 'contact'])
 
 Route::resource('posts', App\Http\Controllers\PostsController::class)->except(['index']);
 Route::resource('comments', App\Http\Controllers\CommentsController::class)->only(['store', 'destroy']);
+Route::resource('replies', App\Http\Controllers\RepliesController::class)->only(['store', 'destroy']);
 
 Route::get('/categories/{id}', [App\Http\Controllers\PostsController::class, 'category']);
 Route::get('/posts/find/{term}', [App\Http\Controllers\PostsController::class, 'search']);
