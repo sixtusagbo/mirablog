@@ -7,6 +7,15 @@ use Illuminate\Http\Request;
 
 class RepliesController extends Controller
 {
+    /**
+     * Create a new controller instance
+     * 
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -37,10 +46,15 @@ class RepliesController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
+     * @return \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        return $id;
+        // return $request; //? test case
+
+        Reply::destroy($id);
+
+        return redirect('/posts/' . $request->post_id);
     }
 }

@@ -148,6 +148,7 @@
                                                                 @auth
                                                                     @if ($reply->user->id == Auth::user()->id)
                                                                         {!! Form::open(['route' => ['replies.destroy', $reply->id], 'method' => 'DELETE']) !!}
+                                                                        {{ Form::hidden('post_id', $post->id) }}
 
                                                                         {{ Form::submit('Delete', ['class' => 'btn btn-danger w-100']) }}
                                                                         {!! Form::close() !!}
