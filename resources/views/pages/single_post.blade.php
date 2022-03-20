@@ -133,8 +133,8 @@
                                             @foreach ($comment->replies->sortByDesc('created_at') as $reply)
                                                 <div class="d-flex mt-4">
                                                     <div class="flex-shrink-0"><img class="rounded-circle"
-                                                            src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
-                                                            alt="..." /></div>
+                                                            src="{{ asset('storage/images/profile/' . $reply->user->profile_image) }}"
+                                                            height="42" width="42" /></div>
                                                     <div class="ms-3">
                                                         <div class="dropdown">
                                                             <a class="dropdown-toggle" href="" role="button"
