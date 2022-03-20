@@ -85,7 +85,7 @@
                             @foreach ($recentPosts as $post)
                                 <a href="/posts/{{ $post->id }}"
                                     class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-                                    <img src="{{ asset('storage/images/profile/' . Auth::user()->profile_image) }}"
+                                    <img src="{{ asset('storage/images/profile/' . $post->user->profile_image) }}"
                                         alt="{{ $post->user->name }}" width="32" height="32"
                                         class="rounded-circle flex-shrink-0">
                                     <div class="d-flex gap-2 w-100 justify-content-between">

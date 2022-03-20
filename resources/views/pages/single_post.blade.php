@@ -82,7 +82,8 @@
                                 <div class="d-flex mb-0 mt-3">
                                     <!-- Parent comment-->
                                     <div class="flex-shrink-0"><img class="rounded-circle"
-                                            src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                                            src="{{ asset('storage/images/profile/' . $comment->user->profile_image) }}"
+                                            height="42" width="42" /></div>
                                     <div class="ms-3">
                                         <div class="dropdown">
                                             <a class="dropdown-toggle" href="" role="button" id="dropdownMenuLink"
@@ -176,7 +177,7 @@
                         @foreach ($recentPostsFromTheAuthor as $post)
                             <a href="/posts/{{ $post->id }}"
                                 class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-                                <img src="{{ asset('storage/images/profile/' . Auth::user()->profile_image) }}"
+                                <img src="{{ asset('storage/images/profile/' . $post->user->profile_image) }}"
                                     alt="{{ $post->user->name }}" width="32" height="32"
                                     class="rounded-circle flex-shrink-0">
                                 <div class="d-flex gap-2 w-100 justify-content-between">
