@@ -29,16 +29,17 @@
                       <div class="dropdown text-end">
                           <a href="" class="d-block link-dark text-decoration-none dropdown-toggle text-primary"
                               id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                              <img src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="mdo" width="32" height="32"
-                                  class="rounded-circle">
+                              <img src="{{ asset('storage/images/profile/' . Auth::user()->profile_image) }}" alt="mdo"
+                                  width="32" height="32" class="rounded-circle">
                           </a>
                           <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                               <li><a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard</a></li>
+                              <li><a class="dropdown-item" href="{{ url('/') }}">Blog</a></li>
                               <li>
                                   <hr class="dropdown-divider">
                               </li>
                               <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();">
+                                                    document.getElementById('logout-form').submit();">
                                   {{ __('Logout') }}
                               </a>
 

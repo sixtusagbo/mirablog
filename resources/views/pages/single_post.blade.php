@@ -121,7 +121,6 @@
                                                             <button type="submit" class="btn btn-dark mt-3">Reply</button>
                                                         </div>
                                                         {!! Form::hidden('comment_id', $comment->id) !!}
-                                                        {!! Form::hidden('post_id', $post->id) !!}
                                                         {!! Form::close() !!}
                                                     </div>
                                                 </div>
@@ -148,8 +147,6 @@
                                                                 @auth
                                                                     @if ($reply->user->id == Auth::user()->id)
                                                                         {!! Form::open(['route' => ['replies.destroy', $reply->id], 'method' => 'DELETE']) !!}
-                                                                        {{ Form::hidden('post_id', $post->id) }}
-
                                                                         {{ Form::submit('Delete', ['class' => 'btn btn-danger w-100']) }}
                                                                         {!! Form::close() !!}
                                                                     @endif

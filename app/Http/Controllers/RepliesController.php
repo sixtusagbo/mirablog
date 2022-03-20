@@ -30,7 +30,6 @@ class RepliesController extends Controller
         $newReply = $request->validate([
             'content' => 'required',
             'comment_id' => 'required',
-            'post_id' => 'required',
         ]);
 
         $reply = new Reply();
@@ -39,22 +38,20 @@ class RepliesController extends Controller
         $reply->comment_id = $newReply['comment_id'];
         $reply->save();
 
-        return redirect('/posts/' . $newReply['post_id']);
+        return redirect()->back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id, Request $request)
+    public function destroy($id)
     {
         // return $request; //? test case
 
         Reply::destroy($id);
 
-        return redirect('/posts/' . $request->post_id);
+        return redirect()->back();
     }
 }

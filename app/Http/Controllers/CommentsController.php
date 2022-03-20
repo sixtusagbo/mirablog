@@ -39,7 +39,7 @@ class CommentsController extends Controller
         $comment->user_id = auth()->user()->id;
         $comment->save();
 
-        return redirect('/posts/' . $newComment['post_id']);
+        return redirect()->back();
     }
 
     /**
@@ -56,6 +56,6 @@ class CommentsController extends Controller
         $comment->replies()->delete();
         $comment->delete();
 
-        return redirect('/posts/' . $comment->post_id);
+        return redirect()->back();
     }
 }

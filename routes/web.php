@@ -28,3 +28,5 @@ Route::get('/posts/find/{term}', [App\Http\Controllers\PostsController::class, '
 Auth::routes();
 
 Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+Route::get('/dashboard/profile', [App\Http\Controllers\DashboardController::class, 'profile'])->name('profile');
+Route::post('/dashboard/profile', [App\Http\Controllers\DashboardController::class, 'uploadProfileImage'])->name('updateProfileImage');
