@@ -61,10 +61,8 @@ class DashboardController extends Controller
 
         if ($request->hasFile('profile_image')) {
             // upload image to server and save name to database
-            $fileNameWithExtension = $request->file('profile_image')->getClientOriginalName();
-            $fileName = pathinfo($fileNameWithExtension, PATHINFO_FILENAME);
             $fileExtension = $request->file('profile_image')->getClientOriginalExtension();
-            $fileNameToStore = $fileName . '_' . time() . '.' . $fileExtension;
+            $fileNameToStore = time() . '.' . $fileExtension;
 
             $request->file('profile_image')->storeAs('public/images/profile/', $fileNameToStore);
         } else {
