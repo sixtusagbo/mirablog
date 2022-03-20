@@ -49,7 +49,7 @@ class DashboardController extends Controller
         // return 123; //? test case
 
         $this->validate($request, [
-            'profile_image' => 'image|required'
+            'profile_image' => 'image|required',
         ]);
 
         $id = auth()->user()->id; // user id whose image wil be added

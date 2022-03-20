@@ -42,7 +42,8 @@
                     </header>
                     <!-- Preview image figure-->
                     <figure class="mb-4"><img class="img-fluid rounded"
-                            src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
+                            src="{{ asset('storage/images/post_covers/' . $post->cover_image) }}" alt="Cover Image" />
+                    </figure>
                     <!-- Post content-->
                     <section class="mb-5">
                         <p class="fs-5 mb-4">{!! $post->body !!}</p>
@@ -175,8 +176,9 @@
                         @foreach ($recentPostsFromTheAuthor as $post)
                             <a href="/posts/{{ $post->id }}"
                                 class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-                                <img src="https://github.com/twbs.png" alt="{{ $post->user->name }}" width="32"
-                                    height="32" class="rounded-circle flex-shrink-0">
+                                <img src="{{ asset('storage/images/profile/' . Auth::user()->profile_image) }}"
+                                    alt="{{ $post->user->name }}" width="32" height="32"
+                                    class="rounded-circle flex-shrink-0">
                                 <div class="d-flex gap-2 w-100 justify-content-between">
                                     <div>
                                         <h6 class="mb-0">{{ $post->title }}</h6>
@@ -207,15 +209,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('other_scripts')
-    <script src="{{ asset('vendor/jquery.min.js') }}"></script>
-    <script>
-        $('#replyForm').hide();
-        $('#replyForm').click(function(e) {
-            e.preventDefault();
-            //TODO: Continue here
-        });
-    </script>
 @endsection

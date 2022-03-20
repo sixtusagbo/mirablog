@@ -28,11 +28,12 @@
                                 <!-- Blog post-->
                                 <div class="card mb-4">
                                     <a href="/posts/{{ $post->id }}"><img class="card-img-top"
-                                            src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
+                                            src="{{ asset('storage/images/post_covers/' . $post->cover_image) }}"
+                                            alt="..." /></a>
                                     <div class="card-body">
                                         <div class="small text-muted">{{ $post->created_at->toDayDateTimeString() }}</div>
                                         <h2 class="card-title h4">{{ $post->title }}</h2>
-                                        <p class="card-text">{!! substr($post->body, 0, 15) . '...' !!}</p>
+                                        <p class="card-text">{!! substr($post->body, 0, 20) . '...' !!}</p>
                                         <a class="btn btn-primary" href="/posts/{{ $post->id }}">Read more →</a>
                                     </div>
                                 </div>
@@ -84,8 +85,9 @@
                             @foreach ($recentPosts as $post)
                                 <a href="/posts/{{ $post->id }}"
                                     class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-                                    <img src="https://github.com/twbs.png" alt="{{ $post->user->name }}" width="32"
-                                        height="32" class="rounded-circle flex-shrink-0">
+                                    <img src="{{ asset('storage/images/profile/' . Auth::user()->profile_image) }}"
+                                        alt="{{ $post->user->name }}" width="32" height="32"
+                                        class="rounded-circle flex-shrink-0">
                                     <div class="d-flex gap-2 w-100 justify-content-between">
                                         <div>
                                             <h6 class="mb-0">{{ $post->title }}</h6>
@@ -112,11 +114,23 @@
     <script src="{{ asset('vendor/jquery.min.js') }}"></script>
     <script>
         $('#error-hint').hide();
-        $('#search-button').click(function(e) {
+
+        function processSearch() {
             if ($('#search-field').val() == '') {
                 $('#error-hint').show();
             } else {
                 location.href = '/posts/find/' + $('#search-field').val();
+            }
+        }
+
+        $('#search-button').click(function(e) {
+            processSearch();
+        });
+
+        $('#search-field').keyup(function(e) {
+            if (e.keyCode == 13) {
+                // enter key press
+                processSearch();
             }
         });
     </script>

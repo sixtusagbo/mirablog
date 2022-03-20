@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
 {
@@ -49,7 +50,18 @@ class PostsController extends Controller
             'body' => 'required',
             'tags' => 'required',
             'category' => 'required',
+            'cover_image' => 'image',
         ]);
+
+        if ($request->hasFile('cover_image')) {
+            // upload image to server and save name to database
+            $fileNameWithExtension = $request->file('cover_image')->getClientOriginalName();
+            $fileName = pathinfo($fileNameWithExtension, PATHINFO_FILENAME);
+            $fileExtension = $request->file('cover_image')->getClientOriginalExtension();
+            $fileNameToStore = $fileName . '_' . time() . '.' . $fileExtension;
+
+            $request->file('cover_image')->storeAs('public/images/post_covers/', $fileNameToStore);
+        }
 
         $post = new Post();
         $post->title = $newPost['title'];
@@ -57,6 +69,9 @@ class PostsController extends Controller
         $post->tags = $newPost['tags'];
         $post->user_id = auth()->user()->id;
         $post->category_id = $newPost['category'];
+        if ($request->hasFile('cover_image')) {
+            $post->cover_image = $fileNameToStore;
+        }
         $post->save();
 
         return redirect('/')->with('success', 'New post created');
@@ -121,13 +136,32 @@ class PostsController extends Controller
             'body' => 'required',
             'tags' => 'required',
             'category' => 'required',
+            'cover_image' => 'image',
         ]);
 
-        $post = Post::find($id);
+        $post = Post::find($id); // post id to be updated
+
+        if ($post->cover_image != 'no_cover_image.png') {
+            Storage::delete('public/images/post_covers/' . $post->cover_image);
+        }
+
+        if ($request->hasFile('cover_image')) {
+            // upload image to server and save name to database
+            $fileNameWithExtension = $request->file('cover_image')->getClientOriginalName();
+            $fileName = pathinfo($fileNameWithExtension, PATHINFO_FILENAME);
+            $fileExtension = $request->file('cover_image')->getClientOriginalExtension();
+            $fileNameToStore = $fileName . '_' . time() . '.' . $fileExtension;
+
+            $request->file('cover_image')->storeAs('public/images/post_covers/', $fileNameToStore);
+        }
+
         $post->title = $newValues['title'];
         $post->body = $newValues['body'];
         $post->tags = $newValues['tags'];
         $post->category_id = $newValues['category'];
+        if ($request->hasFile('cover_image')) {
+            $post->cover_image = $fileNameToStore;
+        }
         $post->save();
 
         return redirect('/')->with('success', 'Post updated!');

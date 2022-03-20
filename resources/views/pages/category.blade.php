@@ -29,7 +29,8 @@
                                     <!-- Blog post-->
                                     <div class="card mb-4">
                                         <a href="/posts/{{ $post->id }}"><img class="card-img-top"
-                                                src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
+                                                src="{{ asset('storage/images/post_covers/' . $post->cover_image) }}"
+                                                alt="..." /></a>
                                         <div class="card-body">
                                             <div class="small text-muted">{{ $post->created_at->toDayDateTimeString() }}
                                             </div>
