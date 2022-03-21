@@ -14,6 +14,22 @@ Mirablog is a project built with Laravel 9.0 for the course 'All through Laravel
 ```bash
 git clone https://github.com/sixtusmiracle/mirablog
 ```
+
+#### Install composer dependencies
+```bash
+composer install
+```
+
+#### Install npm packages
+```bash
+npm install
+```
+
+#### Compile with mix
+```bash
+npm run dev
+```
+
 #### Run the database migrations
 ```bash
 php artisan migrate
