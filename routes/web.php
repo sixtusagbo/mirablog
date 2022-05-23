@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,3 +31,7 @@ Auth::routes();
 Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 Route::get('/dashboard/profile', [App\Http\Controllers\DashboardController::class, 'profile'])->name('profile');
 Route::post('/dashboard/profile', [App\Http\Controllers\DashboardController::class, 'uploadProfileImage'])->name('updateProfileImage');
+
+Route::get('/linkstorage', function () {
+  Artisan::call('storage:link');
+});
