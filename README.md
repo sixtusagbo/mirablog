@@ -9,7 +9,7 @@
 
 Mirablog is a project built with Laravel 9.0 for the course 'All through Laravel' on my [YouTube Channel](https://www.youtube.com/channel/UCNUdTruoC0GT68ewdSpXjIQ?sub_confirmation=1)
 
-## Instalation
+## Installation
 
 ```bash
 git clone https://github.com/sixtusmiracle/mirablog
