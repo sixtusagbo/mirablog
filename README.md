@@ -1,9 +1,9 @@
 # Mirablog
 
-[![License](https://img.shields.io/github/license/sixtusmiracle/mirablog)](LICENSE)
-![GitHub repo size in bytes](https://img.shields.io/github/repo-size/sixtusmiracle/mirablog)
+[![License](https://img.shields.io/github/license/sixtusagbo/mirablog)](LICENSE)
+![GitHub repo size in bytes](https://img.shields.io/github/repo-size/sixtusagbo/mirablog)
 
-![Screenshot](https://raw.githubusercontent.com/sixtusmiracle/mirablog/main/screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/sixtusagbo/mirablog/main/screenshot.png)
 
 ## About Mirablog
 
@@ -12,7 +12,7 @@ Mirablog is a project built with Laravel 9.0 for the course 'All through Laravel
 ## Installation
 
 ```bash
-git clone https://github.com/sixtusmiracle/mirablog
+git clone https://github.com/sixtusagbo/mirablog
 ```
 
 #### Install composer dependencies
@@ -46,11 +46,11 @@ php arisan serve
 ```
 
 ## Contributing
-- Fork the repo ( https://github.com/sixtusmiracle/mirablog/fork )
+- Fork the repo ( https://github.com/sixtusagbo/mirablog/fork )
 - Create a branch for your new feature ( `git checkout -b my-new-feature` )
 - Commit your changes (`git commit -am 'Added some feature'`)
 - Push to the branch (`git push origin my-new-feature`)
-- Create a new [Pull Request](https://github.com/sixtusmiracle/mirablog/pulls)
+- Create a new [Pull Request](https://github.com/sixtusagbo/mirablog/pulls)
 
 ## License
 
