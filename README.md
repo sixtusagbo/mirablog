@@ -58,9 +58,5 @@ MIT
 
 ## About the Author
 
-Created by Sixtus Miracle.
-
-## Donate
-
-You can support me via [Barter](https://barter.me/sixtusagbo)
+Built with 💖 by Sixtus Miracle Agbo
 
