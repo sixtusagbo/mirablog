@@ -16,41 +16,60 @@ git clone https://github.com/sixtusagbo/mirablog
 ```
 
 #### Install composer dependencies
+
 ```bash
 composer install
 ```
 
-#### Install npm packages
-```bash
-npm install
-```
+#### Handle env file
 
-#### Compile with mix
 ```bash
-npm run dev
+cp .env.example .env
+
+php artisan key:generate
+
+# Modify database config in env file
 ```
 
 #### Run the database migrations
+
 ```bash
 php artisan migrate
 ```
 
 #### Create symlink to storage
+
 ```bash
 php artisan storage:link
 ```
 
 #### Run the app
+
 ```bash
 php arisan serve
 ```
 
+## Styles
+
+#### Install npm packages
+
+```bash
+npm install
+```
+
+#### Compile with mix
+
+```bash
+npm run dev
+```
+
 ## Contributing
-- Fork the repo ( https://github.com/sixtusagbo/mirablog/fork )
-- Create a branch for your new feature ( `git checkout -b my-new-feature` )
-- Commit your changes (`git commit -am 'Added some feature'`)
-- Push to the branch (`git push origin my-new-feature`)
-- Create a new [Pull Request](https://github.com/sixtusagbo/mirablog/pulls)
+
+-   Fork the repo ( https://github.com/sixtusagbo/mirablog/fork )
+-   Create a branch for your new feature ( `git checkout -b my-new-feature` )
+-   Commit your changes (`git commit -am 'Added some feature'`)
+-   Push to the branch (`git push origin my-new-feature`)
+-   Create a new [Pull Request](https://github.com/sixtusagbo/mirablog/pulls)
 
 ## License
 
@@ -59,4 +78,3 @@ MIT
 ## About the Author
 
 Built with 💖 by Sixtus Miracle Agbo
-
