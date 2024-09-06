@@ -35,7 +35,7 @@ class PostsTest extends TestCase
         $category = Category::create([
             'name' => 'test'
         ]);
-        Post::create([
+        $post = Post::create([
             'title' => 'Foo',
             'body' => 'lorem ipsum',
             'user_id' => $user->id,
@@ -51,5 +51,8 @@ class PostsTest extends TestCase
         $response->assertStatus(200);
         $response->assertDontSee('No posts found');
         $response->assertSee('Foo');
+        $response->assertViewHas('posts', function ($collection) use ($post) {
+            return $collection->contains($post);
+        });
     }
 }
