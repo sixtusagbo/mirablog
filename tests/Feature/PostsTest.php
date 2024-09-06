@@ -25,6 +25,7 @@ class PostsTest extends TestCase
 
     public function test_homepage_contains_some_posts()
     {
+        // Arrange
         $user = User::create([
             'name' => 'John Doe',
             'email' => 'sixtusagbo211@gmail.com',
@@ -42,10 +43,13 @@ class PostsTest extends TestCase
             'category_id' => $category->id,
             'profile_image' => 'No profile image',
         ]);
+
+        // Act
         $response = $this->get('/');
 
+        // Assert
         $response->assertStatus(200);
-
         $response->assertDontSee('No posts found');
+        $response->assertSee('Foo');
     }
 }
