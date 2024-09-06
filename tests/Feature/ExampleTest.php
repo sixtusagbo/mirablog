@@ -18,4 +18,13 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_the_homepage_contains_no_symphony()
+    {
+        $response = $this->get('/');
+
+        $response->assertDontSee('Symfony');
+
+        $response->assertStatus(200);
+    }
 }
