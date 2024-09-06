@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -11,6 +12,8 @@ use Tests\TestCase;
 
 class PostsTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_homepage_contains_no_post()
     {
         $response = $this->get('/');
@@ -22,12 +25,22 @@ class PostsTest extends TestCase
 
     public function test_homepage_contains_some_posts()
     {
+        $user = User::create([
+            'name' => 'John Doe',
+            'email' => 'sixtusagbo211@gmail.com',
+            'password' => Hash::make('password')
+
+        ]);
+        $category = Category::create([
+            'name' => 'test'
+        ]);
         Post::create([
             'title' => 'Foo',
             'body' => 'lorem ipsum',
-            'user_id' => 1,
+            'user_id' => $user->id,
             'tags' => 'test,youtube',
-            'category_id' => 1,
+            'category_id' => $category->id,
+            'profile_image' => 'No profile image',
         ]);
         $response = $this->get('/');
 
